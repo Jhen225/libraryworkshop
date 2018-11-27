@@ -1,0 +1,26 @@
+<section id="statistics">
+  <h3>Statistics</h3>
+
+  <div>
+    <p>Total Number of Participants: {{participants.length}}</p>
+    <p>Total Number of Workshops: {{workshops.length}}</p>
+  </div>
+
+  <br/>
+  
+  <div>
+    <h4>Age Counts</h4>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let age_count of age_counts;let i = index"><p>Number of {{i+5}} year olds: {{age_count}}</p><p class="list-group-item-details">Boys: {{age_genCount[i].male}} <span>| Girls: {{age_genCount[i].female}}</span></p></li>
+    </ul>
+  </div>
+
+  <div>
+    <h2>Gender Count</h2>
+    <ul class="list-group">
+      <li class="list-group-item">Boys: {{male_count}}</li>
+      <li class="list-group-item">Girls: {{female_count}}</li>
+    </ul>
+  </div>
+  
+</section>

@@ -1,0 +1,30 @@
+<button *ngIf="!changePass" (click)="changePass=!changePass" class="btn btn-default">Change Password</button>
+<div *ngIf="changePass" class="well">
+    <form class="padded-form" (submit)="changePassword()">
+        <div class="row">
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" [(ngModel)]="update.password" name="update.password" class="form-control" placeholder="Password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" [(ngModel)]="update.confirm" name="update.confirm" class="form-control" placeholder="Confirm Password">
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+<!--
+<form *ngIf="clear" [formGroup]="authForm" novalidate>
+    <div class="form-group">
+        <input type="text" class="form-control" formControlName="username">
+        <input type="password" class="form-control" formControlName="password">
+        <p>Form value: {{ authForm.value | json }}</p>
+        <p>Form status: {{ authForm.status | json }}</p>
+    </div>
+    
+</form>-->
+
+<button (click)="clear = !clear" class="btn btn-warning">Clear</button>

@@ -1,0 +1,399 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import url('./app/components/navbar/navbar.component.css');*/
+
+
+/*body{
+    background: white;
+}*/
+
+#logo{
+    width: 200px;
+    height: 150px;
+    text-align: center;
+}
+
+#print-section{
+    display:none;
+}
+
+input{
+    color: #2aa198
+}
+
+.navbar{
+    border-radius: 0px !important;
+}
+
+.controls{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.control{
+    margin-right: 10px;
+}
+
+.control:last-child{
+    margin-right: 0;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.list-group-item{
+    cursor: pointer;
+}
+
+.list-group-item > a:hover{
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.list-group-item-details{
+    /*text-indent: 10px;*/
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+#login{
+    height: 96vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/*#login > h2{
+    margin-bottom: 40px;
+    font-size: 30px;
+}*/
+
+.site-title{
+    font-size: 6.8vw;
+}
+
+.login-form{
+    display:flex;
+    flex-direction: column;
+    /*max-width: 70vw;*/
+    width: 65vw;
+}
+
+.login-form-input{
+    margin: 10px 0;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.login-form-input:focus{
+    outline: none;
+    border: 2px solid #2aa198;
+}
+
+input:focus{
+    outline: none;
+    border: 2px solid #2aa198;
+}
+
+.login-form-button{
+    background: #2aa198;
+    height: 35px;
+    /*color: white;*/
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.form-submit{
+    width: 100%
+}
+
+#register{
+    height:70vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.well{
+    min-width:100%;
+}
+
+.form-header{
+    margin-bottom: 30px;
+}
+
+.alerts{
+    /*position:absolute;*/
+    padding-top: 2vh;
+
+}
+
+.register-back{
+    margin-top: 20px;
+}
+
+.pad-left{
+    padding: 20px;
+}
+
+.text-lg{
+    height: 150px;
+}
+
+.padded-form{
+    padding: 30px;
+}
+
+.full{
+    color:red;
+}
+
+@media screen and (min-width:450px){
+    .site-title{
+        font-size: 30px;
+    }
+
+    .login-form{
+        width: 400px;
+    }
+}
+
+/*.site-title{
+    font-size: ;
+}*/
+
+/*.detail-container{
+    background: rgba(11,50,50,1);
+}*/
+
+/*
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+    
+}
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+}
+
+.container{
+    margin-top: 6vh;
+    position: relative;
+    padding: 2% 8%;
+}
+
+.alert-success{
+    background-color: green;
+    color:white;
+    font-size: 18px;
+    padding:15px 25px;
+}
+
+.alert-danger{
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    padding:15px 25px;
+}
+
+.section-header{
+    font-size: 26px;
+
+}
+
+nav{
+  display: flex;
+  width: 100vw;
+  height: 6vh;
+  justify-content: space-between;
+  background: rgba(11,50,50,1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+nav li {
+    display: inline-block;
+    
+}
+
+.nav-group-main{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-left: 8%; 
+}
+
+.nav-group-right{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-right: 8%; 
+}
+
+.nav-item{
+  list-style: none;
+  text-decoration: none;
+  color:white;
+  margin-right: 10px;
+  
+}
+
+.nav-item:hover{
+  color: #c1c1c1;
+}
+
+.active{
+    text-decoration: underline;
+}
+
+#login{
+    height: 96vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#login > h2{
+    margin-bottom: 40px;
+    font-size: 30px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction: column;
+    width: 25vw;
+}
+
+.login-form-input{
+    margin: 10px 0;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.login-form-input:focus{
+    outline: none;
+    border: 2px solid rgba(11,50,50,1);
+}
+
+.login-form-button{
+    background: rgba(11,50,50,1);
+    height: 35px;
+    color: white;
+    border: rgba(11,50,50,1);
+    margin-top: 10px;
+}
+
+.parent-container{
+    position:relative;
+    height:86vh;
+
+}
+
+.child-container{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 100vw;
+    padding: 2% 0;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.controls{
+    display: flex;
+    justify-content: flex-end;
+
+    margin: 25px 0;
+}
+
+.list-group{
+    list-style:none;
+    border: 1px solid black;
+    margin-bottom: 6%;
+}
+
+.list-group > li{
+    border-bottom: 1px solid black;
+    padding: 10px 0 10px 20px;
+    cursor: pointer;
+}
+
+.list-group > li:last-child{
+    border-bottom: none
+}
+
+.list-group-item{
+    font-size: 18px;
+    text-decoration: none;
+    color:black;
+}
+
+.list-group-item-details{
+    text-indent: 10px;
+    font-size: 10px;
+    color:gray;
+}
+
+.btn{
+    height: 35px;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: none;
+    margin: 0 5px;
+    border: none;
+}
+
+.btn-primary{
+    background-color: rgba(11,50,50,1);
+    font-size: 16px;
+    color: white; 
+}
+
+.btn-success{
+    background-color: green;
+    font-size: 16px;
+    color: white; 
+}
+
+.btn-danger{
+    background-color: red;
+    font-size: 16px;
+    color: white; 
+}
+
+*/
+
+

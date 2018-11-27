@@ -1,0 +1,10 @@
+<section id="schedule">
+  <h1>Workshop Schedule</h1>
+</section>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let workshop of workshops | orderByDate">
+    <h3>{{workshop.title}}</h3>
+    <p>{{workshop.date | date: 'MM/dd/yyyy'}} {{workshop.startTime}}-{{workshop.endTime}}</p>
+  </li>
+</ul>

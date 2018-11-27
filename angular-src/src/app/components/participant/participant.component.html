@@ -1,0 +1,171 @@
+<div *ngIf="participant" class="controls">
+  <input *ngIf="!editing" (click)="goBack()" class="btn btn-default control" type="button" value="Back">
+  <input *ngIf="!editing" (click)="editParticipant()" class="btn btn-default control" type="button" value="Edit">
+  <input *ngIf="!editing" (click)="deleteParticipant()" class="btn btn-warning control" type="button" value="Delete">
+</div>
+
+<div class="detail-container" *ngIf="participant && !editing">
+  <p>Name: {{participant.firstName}} {{participant.lastName}}</p>
+  <p>Age: {{participant.age}}</p>
+  <p>Birthday: {{month}}/{{day}}/{{year}}</p>
+  <p>Gender: {{participant.gender}}</p>
+  <p>Primary Phone Number: {{participant.phoneNumber}}</p>
+  <p *ngIf="participant.phoneNumberOpt">Secondary Phone Number: {{participant.phoneNumberOpt}}</p>
+  <p>Address:{{participant.address.street}}</p>
+  <p *ngIf="participant.address.street2 !== null">{{participant.address.street2}}</p>
+  <p>{{participant.address.city}}, {{participant.address.state}}, {{participant.address.zipCode}}</p>
+  <p>Additional Info: <span *ngIf="participant.additional; else noadditional">{{participant.additional}}</span></p>
+  <ng-template #noadditional>None</ng-template>
+  <p *ngIf="participant.photographPermission">Photograph Permission: Yes</p>
+  <p *ngIf="!participant.photographPermission">Photograph Permission: No</p>
+  
+  
+  <p>Guardian:  {{participant.guardian.firstName}} {{participant.guardian.lastName}}</p>
+  <p>{{participant.guardian.phoneNumber}}</p>
+  <p>{{participant.guardian.email}}</p>
+
+  <p *ngIf="participant.selectedWorkshops.length === 0">Workshops: None</p>
+  <div *ngIf="participant.selectedWorkshops.length > 0">
+    <p>Workshops: </p>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let shop of participant.selectedWorkshops">{{shop.title}}</li>
+    </ul>
+  </div>
+
+  <p *ngIf="participant.alternateWorkshops.length === 0">Alternate Workshops: None</p>
+  <div *ngIf="participant.alternateWorkshops.length > 0">
+    <p>Alternate Workshops:</p>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let shop of participant.alternateWorkshops">{{shop.title}}</li>
+    </ul>
+  </div>
+  
+</div>
+
+<form (submit)="saveParticipant()" class="form-container" *ngIf="editing">
+  <div class="controls">
+    <input (click)="editing=!editing" class="btn btn-default control" type="button" value="Back">
+    <input (click)="saveParticipant()" class="btn btn-success control" type="button" value="Save">
+  </div>
+
+  <label>First Name</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.firstName" name="participant.firstName" placeholder="First Name">
+
+  <label>Last Name</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.lastName" name="participant.lastName" placeholder="Last Name">
+
+  <label>Age</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.age" name="participant.age" placeholder="Age">
+
+  <label>Birthday</label>
+  <input type="date" class="form-control" [(ngModel)]="rfcBDay" name="rfcBDay"/>
+
+  <label>Gender</label>
+  <select class="form-control" [(ngModel)]="participant.gender" name="participant.gender">
+    <option selected value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+
+  <label>Phone Number 1</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.phoneNumber" name="participant.phoneNumber" placeholder="Phone Number">
+
+  <label>Phone Number 2(optional)</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.phoneNumberOpt" name="participant.phoneNumberOpt">
+
+  <label>Additional Infomation(optional)</label>
+  <textarea class="form-control" rows="5" [(ngModel)]="participant.additional" name="participant.additional"></textarea><br/>
+
+
+  <label>
+    <input type="checkbox" class="" [checked]="participant.photographPermission" (change)="participant.photographPermission = !participant.photographPermission" name="participant.photographPermission" value=true/> Permission to photograph
+  </label>
+  <hr />
+  <h4>Address</h4><br/>
+  <label>Street</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.address.street" name="participant.address.street" placeholder="Street"><br/>
+  <input type="text" class="form-control" [(ngModel)]="participant.address.street2" name="participant.address.street2" placeholder="(optional)">
+  <label>City</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.address.city" name="participant.address.city" placeholder="City">
+  <label>State</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.address.state" name="participant.address.state" placeholder="State">
+  <label>Zip Code</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.address.zipCode" name="participant.address.zipCode" placeholder="Zip Code">
+  <hr />
+
+  <h4>Guardian</h4><br/>
+  <label>First Name</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.guardian.firstName" name="participant.guardian.firstName" placeholder="First Name">
+
+  <label>Last Name</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.guardian.lastName" name="participant.guardian.lastName" placeholder="Last Name">
+
+  <label>Phone Number</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.guardian.phoneNumber" name="participant.guardian.phoneNumber" placeholder="Phone Number">
+
+  <label>Email Address</label>
+  <input type="text" class="form-control" [(ngModel)]="participant.guardian.email" name="participant.guardian.email" placeholder="Email Address">
+
+  <h4>Preferred Workshops</h4><br/>
+  <label>Preference 1</label>
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p1" name="p1">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span> | Ages: {{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+      <span> | {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+  
+  <label>Preference 2</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p2" name="p2">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}
+      <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+
+  <label>Preference 3</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p3" name="p3">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+
+  <label>Preference 4</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p4" name="p4">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+
+  <label>Preference 5</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p5" name="p5">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+
+  <label>Preference 6</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p6" name="p6">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span>({{workshop.ageMin}}-{{workshop.ageMax}})</span> 
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+
+  <label>Preference 7</label>      
+  <select *ngIf="workshops" class="form-control" [(ngModel)]="p7" name="p7">
+    <option [ngValue]="">
+    <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+      <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span>
+      <span>| {{workshop.startTime}}-{{workshop.endTime}}</span>
+    </option>
+  </select>
+</form>

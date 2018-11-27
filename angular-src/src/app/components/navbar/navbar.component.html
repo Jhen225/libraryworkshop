@@ -1,0 +1,62 @@
+
+<nav (window:resize)="onResize($event)" id="navbar" class="navbar navbar-default" *ngIf="authService.isLoggedIn()">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" (click)="toggle()" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div *ngIf="width >= 768" class=" navbar-collapse"  id="bs-example-navbar-collapse-1">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/participants']">Participants</a></li>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/workshops']">Workshops</a></li>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/schedule']">Schedule</a></li>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/statistics']">Statistics</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/settings']">Settings</a></li>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/register']">Register</a></li>
+          <li><a class="nav-item" href="" (click)="onLogoutClick()">Logout</a></li>
+        </ul>
+      </div>
+    </div><!-- /.navbar-collapse -->
+
+    <div *ngIf="collapse" class=" navbar-collapse"  id="bs-example-navbar-collapse-1">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/participants']">Participants</a></li>
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/workshops']">Workshops</a></li>
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/schedule']">Schedule</a></li>
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/statistics']">Statistics</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/settings']">Settings</a></li>
+          <li (click)="collapse=!collapse" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/register']">Register</a></li>
+          <li><a class="nav-item" href="" (click)="onLogoutClick()">Logout</a></li>
+        </ul>
+      </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<!--<nav class="navbar navbar-default" *ngIf="authService.isLoggedIn()">
+  <ul class="nav navbar-nav navbar-left nav-group-main">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/participants']">Participants</a></li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/workshops']">Workshops</a></li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/schedule']">Schedule</a></li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a class="nav-item" [routerLink]="['/statistics']">Statistics</a></li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right nav-group-right">
+    <li><a class="nav-item" href="" (click)="onLogoutClick()">Logout</a></li>
+  </ul>
+</nav>-->

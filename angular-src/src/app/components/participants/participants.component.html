@@ -1,0 +1,178 @@
+<div class="parent-container">
+    <h3 *ngIf="!create" class="section-header">Participants</h3>
+    <p *ngIf="!create" class="participant-count">Number of participants: {{participants.length}}</p>
+
+    <div *ngIf="!create" class="controls">
+      <input (click)="print()" class="btn btn-default btn-lg control" type="button" value="Print">
+      <input (click)="create=!create" class="btn btn-success btn-lg control" type="button" value="New">
+    </div>
+
+    <div *ngIf="!create" class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search by Last Name" (keyup)="0" name="searchText" >
+    </div>
+    
+    <ul class="list-group" *ngIf="participants.length > 0 && !create">
+      <li class="list-group-item" *ngFor="let participant of participants | filterBy: {lastName: searchText}; trackBy:participant?._id" (click)='onSelect(participant)'><a class="">{{participant.lastName}}, {{participant.firstName}} <p class="list-group-item-details">Workshops: {{participant.selectedWorkshops.length}} of 2</p></a></li>
+    </ul>
+
+    <div id="print-section">
+      <div *ngFor="let participant of participants">
+        <div class="print-content">
+
+          <div class="print-body">
+            <div class="print-header">
+              <img id="logo" [src]=logoPath />
+            </div>
+            <div>Dear {{participant.firstName}} {{participant.lastName}},</div><br/>
+            <p>Welcome to Iberia Parish Library’s Summer Workshop program! We are happy to celebrate the 34th year of workshops. We hope that you will enjoy the summer activities that we have planned for you. It brings the library much joy to play an active role in our community.</p>
+            <p>Your workshop schedule is attached, and you will find all of the information needed to attend the workshops (branch, time, etc.). Remember there are two sections on the form: <strong>registered and alternate</strong>. In the event you want to try to attend a workshop that you are not registered in, please come 30 minutes prior to the workshop and sign up as a standby. It is not necessary that you be an alternate to participate as a standby. Signing up as a standby does not guarantee you admittance into the workshop.</p>
+            <p>Due to limited space, parents are not allowed to observe the workshops. Parents may remain in the library should their child become upset.</p>
+            <p>Please note that if you are running late to check your child into the workshop that they are registered for, due to traffic or other incidences, please call the library that the workshop is located ahead of the workshop start time to make sure we mark you down as coming. If the workshop begins and you have not called ahead to say you are still coming, that spot will be given to a standby and your spot will be forfeited.</p>
+            <p>Please alert the staff of any allergies or medical conditions your child may have.</p>
+            <p>Please remember that we follow the library’s basic rules of behavior for the workshops (no abusive language, gum chewing, disruptive behavior) and practice common courtesy to the workshop leaders and staff. Children who do not behave correctly will be asked to leave. </p>
+            <p>The workshops are FREE of charge thanks to our very generous Summer Workshop sponsors which include: The New Iberia Optimist Club, Community First Bank, Cox Communications, Friends of the Library and your Iberia Parish Library. We are looking forward to seeing you at the workshops!</p>
+            <div class="footer">
+              <div class="signature">
+                <div>Sincerely,</div>
+                <div>Stephanie Lee</div>
+                <div>Programming Director</div>
+                <div>Iberia Parish Library</div>
+                <div>Work: 337.364.7150</div>
+                <div>E-Mail: slee@iberialibrary.org</div>
+              </div>
+              <div class="pagebreak footer-address">445 East Main Street • New Iberia, LA 70560 • Phone:  337-364-7150 • Fax:  337-364-7622</div>
+            </div>
+            <br/><br/>
+            
+
+            <div class="print-header">
+              <img id="logo" [src]=logoPath />
+            </div>
+            <div>Greetings!</div>
+            <br/>
+            <div>{{participant.firstName}} {{participant.lastName}} has been registered for:</div>
+            <br/>
+            <div *ngFor="let shop of participant.selectedWorkshops">
+              <div class="print-text">{{shop.title}} | {{shop.date | date:'fullDate'}} | {{shop.startTime}} - {{shop.endTime}} | {{shop.location}}</div>
+            </div>
+            <br/>
+            <div>And is an alternate in: </div>
+            <br/>
+            <div *ngFor="let shop of participant.alternateWorkshops">
+              <div class="print-text">{{shop.title}} | {{shop.date | date:'fullDate'}} | {{shop.startTime}} - {{shop.endTime}} | {{shop.location}}</div>
+            </div>
+            <br/>
+
+            <p>If you did not get into the workshops you wanted, don’t be too disheartened! There is always a chance you will be called as an alternate if someone who is registered is unable to attend <strong>OR</strong> you can come the day of the workshop and wait as a standby for a chance to get in, however it is important to remember that coming as a standby does not guarantee you a spot.</p>
+            <p>Please note that if you are running late to check your child into the workshop that they are registered for, due to traffic or other incidents, please call the library that workshop is located ahead of the workshop start time to make sure we mark you down as coming. If the workshop begins and you have not called ahead to say you are still coming, that spot will be given to a standby and your spot will be forfeited.</p>
+            <p class="pagebreak">Do not forget our other exiciting summer programs! You can sign up for the <strong>Summer Reading Program</strong> at any time. We Have other fantastic performaces, events and activities along with the summer workshops that you may attend! You are bound to have the best summer ever with the Iberia Parish Library. So without further ado: let's have fun!</p>
+          </div>
+        </div>
+      </div>  
+    </div>
+    
+
+    <form class="form-container" *ngIf="create">
+      <h3 *ngIf="create" class="section-header">Add Participant</h3><br/>
+      <div class="controls">
+        <input (click)="create=!create" class="btn btn-default control btn-lg" type="button" value="Back">
+        <input (click)="addParticipant()" class="btn btn-success control btn-lg" type="button" value="Submit">
+      </div>
+      <label>First Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.firstName" name="newParticipant.firstName" placeholder="First Name" required>
+
+      <label>Last Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.lastName" name="newParticipant.lastName" placeholder="Last Name" required>
+
+      <label>Age</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.age" name="newParticipant.age" placeholder="Age" required>
+
+      <label>Birthday</label>
+      <input type="date" class="form-control" [(ngModel)]="newParticipant.birthDate" name="newParticipant.birthDate"/>
+
+      <label>Gender</label>
+      <select class="form-control" [(ngModel)]="newParticipant.gender" name="newParticipant.gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label>Phone Number 1</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.phoneNumber" name="newParticipant.phoneNumber" placeholder="Phone Number" required>
+
+      <label>Phone Number 2(optional)</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.phoneNumberOpt" name="newParticipant.phoneNumberOpt">
+
+      <label>Additional Information(optional)</label>
+      <textarea class="form-control" rows="5" [(ngModel)]="newParticipant.additional" name="newParticipant.additional" placeholder="Enter additional information"></textarea><br/>
+
+
+      <label>
+        <input type="checkbox" class="" [checked]="newParticipant.photographPermission" (change)="newParticipant.photographPermission = !newParticipant.photographPermission" name="newParticipant.photographPermission" value=true/> Permission to photograph
+      </label>
+      <hr />
+      <h4>Address</h4><br/>
+      <label>Street</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.address.street" name="newParticipant.address.street" placeholder="Street"><br/>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.address.street2" name="newParticipant.address.street2" placeholder="(optional)">
+      <label>City</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.address.city" name="newParticipant.address.city" placeholder="City">
+      <label>State</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.address.state" name="newParticipant.address.state" placeholder="State">
+      <label>Zip Code</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.address.zipCode" name="newParticipant.address.zipCode" placeholder="Zip Code">
+      <hr />
+
+      <h4>Guardian</h4><br/>
+      <label>First Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.guardian.firstName" name="newParticipant.guardian.firstName" placeholder="First Name" required>
+
+      <label>Last Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.guardian.lastName" name="newParticipant.guardian.lastName" placeholder="Last Name" required>
+
+      <label>Phone Number</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.guardian.phoneNumber" name="newParticipant.guardian.phoneNumber" placeholder="Phone Number" required>
+
+      <label>Email Address</label>
+      <input type="text" class="form-control" [(ngModel)]="newParticipant.guardian.email" name="newParticipant.guardian.email" placeholder="Email Address">
+
+      <hr />
+      <h4>Preferred Workshops</h4><br/>
+      <label>Preference 1</label>
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s1" name="s1">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  
+          <span> | Ages: {{workshop.ageMin}}-{{workshop.ageMax}}</span> 
+          <span> | {{workshop.startTime}}-{{workshop.endTime}}</span>
+        </option>
+      </select>
+      
+      <label>Preference 2</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s2" name="s2">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+
+      <label>Preference 3</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s3" name="s3">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+
+      <label>Preference 4</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s4" name="s4">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+
+      <label>Preference 5</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s5" name="s5">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+
+      <label>Preference 6</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s6" name="s6">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>({{workshop.ageMin}}-{{workshop.ageMax}})</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+
+      <label>Preference 7</label>      
+      <select *ngIf="workshops" class="form-control" [(ngModel)]="s7" name="s7">
+        <option *ngFor="let workshop of workshops" [ngValue]="workshop._id">{{workshop.title}}  <span>{{workshop.ageMin}}-{{workshop.ageMax}}</span> <span>| {{workshop.startTime}}-{{workshop.endTime}}</span></option>
+      </select>
+    </form>
+  </div>

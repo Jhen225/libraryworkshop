@@ -1,0 +1,124 @@
+<div *ngIf="workshop" class="controls">
+  <input *ngIf="!editing && !adding && !removing" (click)="goBack()" class="btn btn-default btn-lg control" type="button" value="Back">
+  <input *ngIf="!editing && !adding && !removing" (click)="adding = !adding" class="btn btn-default control btn-lg" type="button" value="Add">
+  <input *ngIf="!editing && !adding && !removing" (click)="removing = !removing" class="btn btn-default control btn-lg" type="button" value="Remove">
+  <input *ngIf="!editing && !adding && !removing" (click)="editWorkshop()" class="btn btn-default control btn-lg" type="button" value="Edit">
+  <input *ngIf="!editing && !adding && !removing" (click)="deleteWorkshop()" class="btn btn-warning control btn-lg" type="button" value="Delete">
+  
+</div>
+
+<div class="detail-container" *ngIf="(!editing && !adding && !removing) && workshop">
+  <p>Name: {{workshop.title}}</p>
+  <p>Ages: {{workshop.ageMin}}-{{workshop.ageMax}}</p>
+  <p>Date: {{workshop.date | date:'shortDate'}}</p>
+  <p>Time: {{workshop.startTime}} - {{workshop.endTime}}</p>
+  <p>Location: {{workshop.location}}</p>
+  <p>Instructor: {{workshop.instructor}}</p>
+  <p>Enrolled: {{workshop.participants.length}}/{{workshop.capacity}}</p>
+  <p *ngIf="workshop.participants.length == 0">Participants: None Assigned</p>
+  <div *ngIf="workshop.participants.length > 0">
+    <p>Participants: </p>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let participant of workshop.participants">{{participant.firstName}} {{participant.lastName}} 
+        <p class="list-group-item-details">
+          <span>Phone Number: {{participant.phoneNumber}}</span>
+          <span *ngIf="participant.phoneNumberOpt"> | Phone Number(optional): {{participant.phoneNumberOpt}}</span>
+          <span> | Guardian: {{participant.guardian.firstName}} {{participant.guardian.lastName}}</span>
+          <span> | Photograph Permisson: <span *ngIf="participant.photographPermission">Yes</span><span *ngIf="!participant.photographPermission">No</span></span>
+          <span> | Additional: {{participant.additional}}</span>
+        </p>
+      </li>
+    </ul>
+  </div>
+
+  <p *ngIf="workshop.alternates.length == 0">Alternates: None Assigned</p>
+  <div *ngIf="workshop.alternates.length > 0">
+    <p>Alternates: </p>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let alternate of workshop.alternates">{{alternate.firstName}} {{alternate.lastName}}
+        <p class="list-group-item-details">
+          <span>Phone Number: {{alternate.phoneNumber}}</span>
+          <span *ngIf="alternate.phoneNumberOpt"> | Phone Number(optional): {{alternate.phoneNumberOpt}}</span>
+          <span> | Guardian: {{alternate.guardian.firstName}} {{alternate.guardian.lastName}}</span>
+          <span> | Photograph Permisson: <span *ngIf="alternate.photographPermission">Yes</span><span *ngIf="!alternate.photographPermission">No</span></span>
+          <span> | Additional: {{alternate.additional}}</span>
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="adding && participants" class="form-group">
+  <h2>Add</h2>
+  <div class="controls">
+    <input (click)="adding=!adding" class="btn btn-default btn-lg control" type="button" value="Back">
+  </div>
+  <h3>Participant</h3>
+  <select class="form-control" [(ngModel)]="selectedPart" name="selectedPart">
+    <option value="null"></option>
+    <option *ngFor="let participant of participants | sortByLast" [ngValue]="participant">{{participant.firstName}} {{participant.lastName}}</option>
+  </select>
+  <input (click)="addParticipant()" class="btn btn-success btn-lg control" type="button" value="Submit">
+  <h3>Alternate</h3>
+  
+    <select class="form-control" [(ngModel)]="selectedAlt" name="selectedAlt">
+      <option value="null"></option>
+      <option *ngFor="let participant of participants | sortByLast" [ngValue]="participant">{{participant.firstName}} {{participant.lastName}}</option>
+    </select>
+    <input (click)="addAlternate()" class="btn btn-success btn-lg control" type="button" value="Submit">
+  
+
+</div>
+
+<div *ngIf="removing" class="form-group">
+  <h2>Remove</h2>
+  <div class="controls">
+    <input (click)="removing=!removing" class="btn btn-default btn-lg control" type="button" value="Back">
+  </div>
+  <h3>Participant</h3>
+  <select class="form-control" [(ngModel)]="selectedPart" name="selectedPart">
+    <option value="null"></option>
+    <option *ngFor="let participant of workshop.participants | sortByLast" [ngValue]="participant">{{participant.firstName}} {{participant.lastName}}</option>
+  </select>
+  <input (click)="removeParticipant()" class="btn btn-success btn-lg control" type="button" value="Submit">
+  <h3>Alternate</h3>
+  <select class="form-control" [(ngModel)]="selectedAlt" name="selectedAlt">
+    <option value="null"></option>
+    <option *ngFor="let participant of workshop.alternates | sortByLast" [ngValue]="participant">{{participant.firstName}} {{participant.lastName}}</option>
+  </select>
+  <input (click)="removeAlternate()" class="btn btn-success btn-lg control" type="button" value="Submit">
+</div>
+
+<form class="form-container" *ngIf="editing">
+  <div class="controls">
+    <input (click)="editing=!editing" class="btn btn-default btn-lg control" type="button" value="Back">
+    <input (click)="saveWorkshop()" class="btn btn-success btn-lg control" type="button" value="Save">
+  </div>
+  
+  <label>Title</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.title" name="workshop.title" ngValue="workshop.title"><br/>
+
+  <label>Minimum Age</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.ageMin" name="workshop.ageMin" ngValue="workshop.ageMin"><br/>
+
+  <label>Maximum Age</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.ageMax" name="workshop.ageMax" ngValue="workshop.ageMax"><br/>
+
+  <label>Date</label>
+  <input class="form-input" type="date" [(ngModel)]="rfcDate" name="rfcDate" /><br/>
+
+  <label>Start Time</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.startTime" name="workshop.startTime" ngValue="workshop.startTime"><br/>
+
+  <label>End Time</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.endTime" name="workshop.endTime" ngValue="workshop.endTime"><br/>
+
+  <label>Location</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.location" name="workshop.location" ngValue="workshop.location"><br/>
+
+  <label>Instructor</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.instructor" name="workshop.instructor" ngValue="workshop.instructor"><br/>
+
+  <label>Capacity</label>
+  <input class="form-input" type="text" [(ngModel)]="workshop.capacity" name="workshop.capacity" ngValue="workshop.capacity">
+</form>

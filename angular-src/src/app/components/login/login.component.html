@@ -1,0 +1,8 @@
+<section id="login">
+  <h2 class="site-title">Iberia Parish Library Workshop</h2>
+  <form class="login-form" (submit)="onLoginSubmit()" >
+    <input class="login-form-input form-control" type="text" [(ngModel)]="username" name="username" placeholder="Username">
+    <input class="login-form-input form-control" type="password" [(ngModel)]="password" name="password" placeholder="Password">
+    <input class="login-form-button btn-default" type="submit" value="Submit">
+  </form>
+</section>
